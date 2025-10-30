@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🎃 Hackathon Spin Challenge 🎡</title>
+<style>
+  body {
+    font-family: 'Trebuchet MS', sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a 0%, #000 100%);
+    color: #fff;
+    text-align: center;
+    padding: 40px 20px;
+    height: 100vh;
+  }
+  h1 {
+    color: #ff7518;
+    text-shadow: 0 0 10px #ff7518;
+    font-size: 2em;
+  }
+  #wheel {
+    width: 200px;
+    height: 200px;
+    border: 10px solid #ff7518;
+    border-radius: 50%;
+    margin: 40px auto;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 30px #ff7518;
+    animation: spin 0s linear infinite;
+  }
+  #pointer {
+    width: 0; 
+    height: 0; 
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 25px solid #4caf50;
+    margin: 0 auto;
+  }
+  button {
+    background: #ff7518;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    padding: 12px 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #ff7518;
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  button:active {
+    transform: scale(0.95);
+  }
+  #challenge {
+    margin-top: 40px;
+    font-size: 1.3em;
+    color: #a0ffa0;
+    text-shadow: 0 0 8px #4caf50;
+    padding: 10px;
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+  <h1>🎃 Spin the Hackathon Wheel 🎡</h1>
+  <div id="pointer"></div>
+  <div id="wheel"></div>
+  <button onclick="spin()">SPIN!</button>
+  <div id="challenge">Press the button to get a challenge!</div>
+
+<script>
+const challenges = [
+  // 💪 Physical
+  "Do 5 zombie push-ups while groaning like the undead.",
+  "Walk Frankenstein-style to high-five someone.",
+  "Balance on one foot and name your favorite programming language.",
+  "Do your best 'fixed the bug' victory dance!",
+  "Hold a plank and whisper 'boo' every 3 seconds until your turn ends.",
+  "Lead a spooky group stretch (bat arms, skeleton necks).",
+  "Do monster pushups—growl a coding language each time!",
+  // 🧛‍♀️ Social
+  "Introduce yourself to someone and use the word 'pumpkin' in conversation.",
+  "Give someone a spooky compliment (‘You’ve got killer debugging skills!’).",
+  "Compliment someone’s outfit—even if they’re not in costume!",
+  "Make someone laugh within 60 seconds (bonus if coding-related).",
+  "Share the scariest bug you’ve ever caused.",
+  "Find someone you’ve never coded with and agree to pair up later.",
+  "Exchange your most-used emoji with someone and explain why.",
+  "Invent a 'potion' recipe that describes your coding personality.",
+  // 💡 Creative / Funny Tech
+  "Read an error message dramatically, like poetry.",
+  "Invent 3 terrifying variable names (e.g. hauntedLoop, pumpkinBug).",
+  "Pitch a startup using ghosts + AI in 30 seconds.",
+  "Pretend to be your favorite programming language for 10 seconds.",
+  "Confess something as a git commit message (‘fix: removed sleep cycle’).",
+  "Mime putting on an imaginary Halloween costume (‘404 Costume Not Found’).",
+  "Say 'Trick or Treat' in binary (bonus for 101010 explanation!).",
+  "Pretend to summon ChatGPT with a spooky ritual.",
+  "Describe a haunted sorting algorithm (‘Ghost Sort: deletes elements randomly’).",
+  "Describe your last project using only emojis.",
+  // 🎲 Wildcards
+  "Roll a D20: if >10, give your challenge to someone else.",
+  "Draw a pumpkin using ASCII art.",
+  "Act out a merge conflict until everyone ‘approves’ the pull request.",
+  "Lead a 10-second ritual to banish all bugs from the hackathon.",
+  "Create a patch note for yourself (‘v2.0 – fixed memory leak in sleep cycle’)."
+];
+
+function spin() {
+  const wheel = document.getElementById('wheel');
+  wheel.style.animation = "spin 1s linear";
+  setTimeout(() => { wheel.style.animation = "none"; }, 1000);
+
+  const challenge = challenges[Math.floor(Math.random() * challenges.length)];
+  document.getElementById('challenge').innerText = challenge;
+
+  // Optional confetti burst
+  confettiBurst();
+}
+
+function confettiBurst() {
+  for (let i = 0; i < 20; i++) {
+    const c = document.createElement('div');
+    c.style.position = 'fixed';
+    c.style.width = '8px';
+    c.style.height = '8px';
+    c.style.background = ['#ff7518','#4caf50','#fff'][Math.floor(Math.random()*3)];
+    c.style.left = Math.random()*100 + '%';
+    c.style.top = '-10px';
+    c.style.opacity = 0.8;
+    c.style.borderRadius = '50%';
+    c.style.animation = `drop${i} 1s linear forwards`;
+    document.body.appendChild(c);
+    const keyframes = `
+      @keyframes drop${i} {
+        to { transform: translateY(${window.innerHeight}px) rotate(720deg); opacity: 0; }
+      }`;
+    const styleSheet = document.createElement("style");
+    styleSheet.innerText = keyframes;
+    document.head.appendChild(styleSheet);
+    setTimeout(() => c.remove(), 1200);
+  }
+}
+</script>
+</body>
+</html>
